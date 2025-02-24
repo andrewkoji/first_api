@@ -4,3 +4,4 @@ flask_restful
 pyairtable
 gunicorn
 openai==0.28
+requests
