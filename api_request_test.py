@@ -31,7 +31,8 @@ def extract_excel_text(file_path):
     df = pd.read_excel(file_path)
     return df.to_string()
 
-file_path = input("Enter the file path: ")
+
+file_path = input("For your question, enter the file path of any information that will help me answer your questions: ")
 question = input("Enter your question: ")
 
 # Extract text from the file
@@ -48,4 +49,4 @@ response = requests.get(
     params={'prompt': f"Based on this content: {content}\nQuestion: {question}"}
 )
 
-print(response.json())
+print(response.json()['answer'])

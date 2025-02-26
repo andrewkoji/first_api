@@ -190,7 +190,7 @@ class Chatbot(Resource):
                     {"role": "system", "content": "You are a helpful assistant."},
                     {"role": "user", "content": prompt}
                 ],
-                max_tokens=150,  # Limit response length to manage token usage
+                max_tokens=250,  # Limit response length to manage token usage
                 temperature=0.7,  # Controls creativity (0 = deterministic, 1 = creative)
             )
 
