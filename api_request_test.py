@@ -40,6 +40,8 @@ if file_path.endswith('.pdf'):
     content = extract_pdf_text(file_path)
 elif file_path.endswith(('.xls', '.xlsx')):
     content = extract_excel_text(file_path)
+elif file_path == '':
+    content = "nothing!"
 else:
     raise ValueError("Unsupported file type.")
 
