@@ -5,3 +5,6 @@ pyairtable
 gunicorn
 openai==0.28
 requests
+pdfplumber
+pandas
+numpy
