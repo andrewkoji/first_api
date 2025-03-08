@@ -1,24 +1,3 @@
-# import requests
-# import time
-
-# base_url = 'https://first-api-y6hb.onrender.com/chatbot'
-
-# # Prompt the user for input
-# user_prompt = input("Ask anything: ")
-
-# # Pass the user input to the API
-# params = {'prompt': user_prompt}
-
-# if user_prompt:
-#     print('just a sec...')
-#     time.sleep(1)
-#     response = requests.get(base_url, params=params)
-#     print('\n')
-#     # Print the response from the API
-#     print(response.json()['answer'])
-
-    
-    
 import requests
 import pandas as pd
 import pdfplumber
@@ -31,19 +10,23 @@ def extract_excel_text(file_path):
     df = pd.read_excel(file_path)
     return df.to_string()
 
+usefile = input("Do you have any files you would like to supply to help me inform a better response?")
 
-file_path = input("For your question, enter the file path of any information that will help me answer your questions: ")
-question = input("Enter your question: ")
+if usefile == 'YES':
+    file_path = input("For your question, enter the file path of any information that will help me answer your questions: ")
+    question = input("Enter your question: ")
 
-# Extract text from the file
-if file_path.endswith('.pdf'):
-    content = extract_pdf_text(file_path)
-elif file_path.endswith(('.xls', '.xlsx')):
-    content = extract_excel_text(file_path)
-elif file_path == '':
+    # Extract text from the file
+    if file_path.endswith('.pdf'):
+        content = extract_pdf_text(file_path)
+    elif file_path.endswith(('.xls', '.xlsx')):
+        content = extract_excel_text(file_path)
+    else:
+        raise ValueError("Unsupported file type.")
+elif usefile == 'NO':
     content = "nothing!"
-else:
-    raise ValueError("Unsupported file type.")
+    question = input("Enter your question: ")
+    
 
 # Send extracted text and question to the API
 response = requests.get(
@@ -52,3 +35,4 @@ response = requests.get(
 )
 
 print(response.json()['answer'])
+
