@@ -62,7 +62,61 @@ class Chatbot(Resource):
 
         except Exception as e:
             return {"error": f"Failed to get response from OpenAI: {str(e)}"}, 500
+class Spreadsheet(Resource):
+    def post(self):
+        """
+        Uploads a spreadsheet and returns its contents as JSON.
+        ---
+        tags:
+          - Spreadsheet
+        parameters:
+          - name: file
+            in: formData
+            type: file
+            required: true
+            description: The spreadsheet file to upload (Excel or CSV)
+        responses:
+          200:
+            description: A successful POST request with spreadsheet data
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        type: object
+                      description: The spreadsheet data as a list of rows
+          400:
+            description: Invalid input or unsupported file type
+        """
+        if 'file' not in request.files:
+            return {"error": "No file part in the request."}, 400
 
+        file = request.files['file']
+
+        if file.filename == '':
+            return {"error": "No file selected for uploading."}, 400
+
+        try:
+            # Check file extension
+            if file.filename.endswith('.xlsx'):
+                df = pd.read_excel(file)
+            elif file.filename.endswith('.csv'):
+                df = pd.read_csv(file)
+            else:
+                return {"error": "Unsupported file type. Please upload an Excel or CSV file."}, 400
+
+            # Convert DataFrame to JSON
+            data = df.to_dict(orient='records')
+            return {"data": data}, 200
+
+        except Exception as e:
+            return {"error": f"Failed to process the spreadsheet: {str(e)}"}, 500
+
+
+api.add_resource(Spreadsheet, '/spreadsheet')
 
 api.add_resource(Chatbot, '/chatbot')
 

@@ -10,7 +10,7 @@ def extract_excel_text(file_path):
     df = pd.read_excel(file_path)
     return df.to_string()
 
-usefile = input("Do you have any files you would like to supply to help me inform a better response?")
+usefile = input("Do you have any files you would like to supply to help me inform a better response? (YES/NO): ")
 
 if usefile == 'YES':
     file_path = input("For your question, enter the file path of any information that will help me answer your questions: ")
