@@ -4,6 +4,8 @@ import numpy as np
 import streamlit.components.v1 as components
 import asyncio
 import re
+
+
 st.title('LINEAR-QUADRATIC SYSTEMS')
 
 st.write('This is a quadratic-linear system generator.')
@@ -78,7 +80,10 @@ def main():
     st.latex(quad_system_response.json()['factors'])
     st.latex(quad_system_response.json()['roots'][0])
     st.write("4. Plug them into the linear equation to find the y-values.")
+    st.latex(quad_system_response.json()['substitution'][0])
+    st.latex(quad_system_response.json()['substitution'][1])
     st.write("5. Write the solutions as ordered pairs (x, y).")
+    st.latex(quad_system_response.json()['solutions'][0])
 
 
 
