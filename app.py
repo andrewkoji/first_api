@@ -2,31 +2,28 @@ import streamlit as st
 import requests
 import numpy as np
 import streamlit.components.v1 as components
-from agents import Agent
-from agents import Runner
 import asyncio
 import re
 st.title('LINEAR-QUADRATIC SYSTEMS')
 
-st.write('This is a simple chatbot that uses the OpenAI API to answer questions. Please enter your question below.')
+st.write('This is a quadratic-linear system generator.')
 
 # User input
 question = st.text_input("Enter your question: ")
+quad_system_response = requests.get(
+    'https://first-api-y6hb.onrender.com/quadratic-system'
+)
 
-# Generate random coefficients for quadratic and linear functions
-
-a = np.random.randint(-2, 2)
-b = np.random.randint(-10, 10)
-c = np.random.randint(-10, 10)
-m = np.random.randint(-5, 5)
-b_linear = np.random.randint(-10, 10)
 
 # Display the equations in Streamlit
-quadratic_equation = f"y = x^2 + {a+b}x + {a*c}"
-linear_equation = f"y = {m}x + {b_linear}"
+st.write('Shown below is a quadratic function and a linear function, both solved for y:')
+quadratic_equation = quad_system_response.json()['quadratic_function']
+linear_equation = quad_system_response.json()['linear_function']
+solutions = quad_system_response.json()['solutions']
 
 st.latex(quadratic_equation)
 st.latex(linear_equation)
+
 
 # API Call (for chatbot response)
 if question:
@@ -41,7 +38,8 @@ if question:
         st.write("Error fetching response from API.")
 
 # Function to integrate Desmos graph
-def desmos_integration(quadratic_eq, linear_eq):
+def desmos_integration(quadratic_eq, linear_eq, solution_set=None):
+    
     desmos_script = f"""
     <script src="https://www.desmos.com/api/v1.6/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
     <div id="calculator" style="width: 600px; height: 800px;length: 800px"></div>
@@ -50,17 +48,39 @@ def desmos_integration(quadratic_eq, linear_eq):
         var calculator = Desmos.GraphingCalculator(elt);
         calculator.setExpression({{ latex: "{quadratic_eq.replace(' ', '')}" }});
         calculator.setExpression({{ latex: "{linear_eq.replace(' ', '')}" }});
+        calculator.setExpression({{ latex: "{solutions[0]}", showLabel: true }});
     </script>
     """
     components.html(desmos_script, height=500)
 
 # Streamlit App Main Function
 def main():
-    st.title('Desmos Integration with Streamlit')
-    st.write("This is an example of integrating Desmos into a Streamlit web application.")
-
+    st.title('Finding solutions graphically')
+    st.write("The first way to find a solution to the system is to graph both equations and find their intersection points.")
+    st.write("Use your scroll button to zoom in and out of the graph. You can also click and drag to move the graph around.")
+    st.write('The solutions are:')
+    st.latex(solutions[0])
     # Pass the dynamically generated equations to Desmos
-    desmos_integration(f"y={a}x^2+{b}x+{c}", f"y={m}x+{b_linear}")
+    desmos_integration(quadratic_equation, linear_equation)
+
+
+    st.title('Finding solutions algebraically')
+    st.write("The second way to find a solution to the system is to solve the system algebraically. Here are the steps:")
+    st.write("1. Solve the linear equation for y.")
+    st.write("2. Substitute the linear equation into the quadratic equation.")
+    quadratic_withouty = quadratic_equation[4:]
+    linear_withouty = linear_equation[4:]
+    st.latex(quadratic_withouty + ' = ' + linear_withouty)
+    st.write("move all terms to one side of the equation to get:")
+    st.latex(quad_system_response.json()['factored_function'])
+    
+    st.write("3. Solve the quadratic equation using factoring.")
+    st.latex(quad_system_response.json()['factors'])
+    st.latex(quad_system_response.json()['roots'][0])
+    st.write("4. Plug them into the linear equation to find the y-values.")
+    st.write("5. Write the solutions as ordered pairs (x, y).")
+
+
 
 if __name__ == '__main__':
     main()

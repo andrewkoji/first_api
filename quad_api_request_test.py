@@ -3,7 +3,12 @@ import requests
 
 
 response = requests.get(
-    'https://http://127.0.0.1:5000/quadratic-system'
+    'https://first-api-y6hb.onrender.com/quadratic-system'
 )
 
-print(response.json())
+print(response.json()['quadratic_function'])
+print(response.json()['linear_function'])
+print(response.json()['factored_function'])
+print(response.json()['factors'])
+print(response.json()['roots'])
+print(response.json()['solutions'])
