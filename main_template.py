@@ -42,6 +42,7 @@ def quad_linear_system():
                     "factored_function": f"{factored_function} = 0",
                     "factors": f"(x {'-' if i < 0 else '+'} {abs(i)})(x {'-' if j < 0 else '+'} {abs(j)}) = 0",
                     "roots": [f"x = {'' if i < 0 else '-'} {abs(i)},  x = {'' if j < 0 else '-'} {abs(j)}"],
+                    "substitution": [f"y = {d}({-i})+{f} = {-i*d + f}", f"y = {d}({-j})+{f} = {-j*d + f}"],
                     "solutions": [f"( {-i}, {-i*d + f}),({-j}, {-j*d + f})"]
                 }
 
