@@ -47,10 +47,15 @@ def desmos_integration(quadratic_eq, linear_eq, solution_set=None):
     <div id="calculator" style="width: 600px; height: 800px;length: 800px"></div>
     <script>
         var elt = document.getElementById('calculator');
-        var calculator = Desmos.GraphingCalculator(elt);
+        var calculator = Desmos.GraphingCalculator(elt, {{
+            settings: {{
+                invertColors: true  // Enable reverse contrast (dark mode)
+            }}
+        }});
         calculator.setExpression({{ latex: "{quadratic_eq.replace(' ', '')}" }});
         calculator.setExpression({{ latex: "{linear_eq.replace(' ', '')}" }});
         calculator.setExpression({{ latex: "{solutions[0]}", showLabel: true }});
+        calculator.setExpression({{ latex: "{solutions[1]}", showLabel: true }});
     </script>
     """
     components.html(desmos_script, height=500)
@@ -61,7 +66,7 @@ def main():
     st.write("The first way to find a solution to the system is to graph both equations and find their intersection points.")
     st.write("Use your scroll button to zoom in and out of the graph. You can also click and drag to move the graph around.")
     st.write('The solutions are:')
-    st.latex(solutions[0])
+    st.latex(solutions[0] + ',' + solutions[1])
     # Pass the dynamically generated equations to Desmos
     desmos_integration(quadratic_equation, linear_equation)
 
@@ -83,7 +88,7 @@ def main():
     st.latex(quad_system_response.json()['substitution'][0])
     st.latex(quad_system_response.json()['substitution'][1])
     st.write("5. Write the solutions as ordered pairs (x, y).")
-    st.latex(quad_system_response.json()['solutions'][0])
+    st.latex(quad_system_response.json()['solutions'][0] + ','+ quad_system_response.json()['solutions'][1])
 
 
 
