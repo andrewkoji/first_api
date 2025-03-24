@@ -3,6 +3,8 @@ from flask_restful import Api, Resource
 from flasgger import Swagger
 import openai
 import os 
+import pandas as pd
+import numpy as np
 
 
 app = Flask(__name__)
@@ -12,7 +14,36 @@ swagger = Swagger(app)
 
 # Set up OpenAI API key from environment variable
 openai.api_key = os.getenv("OPENAI_API_KEY")
-
+def quad_linear_system():
+    while True:
+        x = np.random.randint(-10, 10)
+        c = np.random.randint(-10, 10)
+        e = np.random.randint(-50, 50)
+        d = np.random.randint(-5, 5)
+        f = np.random.randint(-10, 10)
+        
+        linear = f"y = {'' if d > 0 else '-'}{abs(d)}x {'+ ' if f > 0 else '- '}{abs(f)}"
+        quadratic = f"y = x^2 {'+ ' if c > 0 else '- '}{abs(c)}x {'+ ' if e > 0 else '- '}{abs(e)}"
+        
+        b = c - d
+        a = e - f
+        
+        factored_function = f"x^2 {'+ ' if b > 0 else '- '}{abs(b)}x {'+ ' if a > 0 else '- '}{abs(a)}"
+        if a == 0:
+            continue
+        
+        factors = [(i, a // i) for i in range(1, abs(a) + 1) if a % i == 0]
+        
+        for i, j in factors:
+            if i + j == b:
+                return {
+                    "linear_function": linear,
+                    "quadratic_function": quadratic,
+                    "factored_function": f"{factored_function} = 0",
+                    "factors": f"(x {'-' if i < 0 else '+'} {abs(i)})(x {'-' if j < 0 else '+'} {abs(j)}) = 0",
+                    "roots": [f"x = {'' if i < 0 else '-'} {abs(i)}, x = {'' if j < 0 else '-'} {abs(j)}"],
+                    "solutions": [f"( {-i}, {-i*d + f}), ({-j}, {-j*d + f})"]
+                }
 
 class Chatbot(Resource):
     def get(self):
@@ -62,61 +93,27 @@ class Chatbot(Resource):
 
         except Exception as e:
             return {"error": f"Failed to get response from OpenAI: {str(e)}"}, 500
-class Spreadsheet(Resource):
-    def post(self):
+class QuadraticSystem(Resource):
+    def get(self):
         """
-        Uploads a spreadsheet and returns its contents as JSON.
+        Returns a randomly generated quadratic-linear system and its factored form.
         ---
         tags:
-          - Spreadsheet
-        parameters:
-          - name: file
-            in: formData
-            type: file
-            required: true
-            description: The spreadsheet file to upload (Excel or CSV)
+          - Quadratic System Generator
         responses:
           200:
-            description: A successful POST request with spreadsheet data
+            description: A successfully generated quadratic-linear system
             content:
               application/json:
                 schema:
                   type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        type: object
-                      description: The spreadsheet data as a list of rows
-          400:
-            description: Invalid input or unsupported file type
         """
-        if 'file' not in request.files:
-            return {"error": "No file part in the request."}, 400
-
-        file = request.files['file']
-
-        if file.filename == '':
-            return {"error": "No file selected for uploading."}, 400
-
         try:
-            # Check file extension
-            if file.filename.endswith('.xlsx'):
-                df = pd.read_excel(file)
-            elif file.filename.endswith('.csv'):
-                df = pd.read_csv(file)
-            else:
-                return {"error": "Unsupported file type. Please upload an Excel or CSV file."}, 400
-
-            # Convert DataFrame to JSON
-            data = df.to_dict(orient='records')
-            return {"data": data}, 200
-
+            return quad_linear_system(), 200
         except Exception as e:
-            return {"error": f"Failed to process the spreadsheet: {str(e)}"}, 500
+            return {"error": f"Failed to generate system: {str(e)}"}, 500
 
-
-api.add_resource(Spreadsheet, '/spreadsheet')
+api.add_resource(QuadraticSystem, '/quadratic-system')
 
 api.add_resource(Chatbot, '/chatbot')
 

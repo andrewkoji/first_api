@@ -5,42 +5,10 @@ import streamlit.components.v1 as components
 from agents import Agent
 from agents import Runner
 import asyncio
-
+import re
 st.title('LINEAR-QUADRATIC SYSTEMS')
 
 st.write('This is a simple chatbot that uses the OpenAI API to answer questions. Please enter your question below.')
-
-
-history_tutor_agent = Agent(
-    name="History Tutor",
-    handoff_description="Specialist agent for historical questions",
-    instructions="You provide assistance with historical queries. Explain important events and context clearly.",
-)
-
-math_tutor_agent = Agent(
-    name="Math Tutor",
-    handoff_description="Specialist agent for math questions",
-    instructions="You provide help with math problems. Explain your reasoning at each step and include examples.",
-)
-
-triage_agent = Agent(
-    name="Triage Agent",
-    instructions="You determine which agent to use based on the user's homework question",
-    handoffs=[history_tutor_agent, math_tutor_agent]
-)
-user_question = st.text_input("Please enter your homework question: ")
-
-# user_question = user_question
-# result = await Runner.run(triage_agent, user_question)
-
-# # Since `result` is a string, print it directly
-# # print(str(result.final_output).replace("\(", "").replace("\)", "").replace("\[", "").replace("\]", "").)
-# # Render the LaTeX output using matplotlib
-# latex_output = str(result.final_output).replace("\(", "").replace("\)", "").replace("\[", "").replace("\]", "")
-# st.write(latex_output)
-
-# if __name__ == "__main__":
-#     asyncio.run(main())
 
 # User input
 question = st.text_input("Enter your question: ")
