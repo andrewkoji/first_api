@@ -25,7 +25,7 @@ def quad_linear_system():
         # linear = f"y = {'' if d > 0 else '-'}{abs(d)}x {'+ ' if f > 0 else '- '}{abs(f)}"
         linear = (
             f"y = "
-            + (f"{'-' if d == -1 else ''}{'x' if abs(d) == 1 else f'{'' if d > 0 else '-'}{abs(d)}x'} " if d != 0 else "")
+            + (f"{'-' if d == -1 else ''}{'x' if abs(d) == 1 else f'{abs(d)}x'} " if d != 0 else "")
             + (f"{'+ ' if f > 0 and d != 0 else '- ' if f < 0 else ''}{abs(f)}" if f != 0 else "")
         ).strip()
         # quadratic = f"y = x^2 {'+ ' if c > 0 else '- '}{abs(c)}x {'+ ' if e > 0 else '- '}{abs(e)}"
