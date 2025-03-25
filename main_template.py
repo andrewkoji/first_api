@@ -17,18 +17,19 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 def quad_linear_system():
     while True:
         x = np.random.randint(-10, 10)
-        c = np.random.randint(-10, 10)
-        e = np.random.randint(-50, 50)
-        d = np.random.randint(-5, 5)
-        f = np.random.randint(-10, 10)
-        
-        # linear = f"y = {'' if d > 0 else '-'}{abs(d)}x {'+ ' if f > 0 else '- '}{abs(f)}"
+        c = np.random.randint(-10, 10)  # Coefficient of x in the quadratic equation
+        e = np.random.randint(-50, 50)  # Constant term in the quadratic equation
+        d = np.random.randint(-5, 5)    # Coefficient of x in the linear equation
+        f = np.random.randint(-10, 10)  # Constant term in the linear equation
+
+        # Linear equation: y = dx + f
         linear = (
             f"y = "
-            + (f"{'-' if d == -1 else ''}{'x' if abs(d) == 1 else f'{abs(d)}x'} " if d != 0 else "")
+            + (f"{'-' if d < 0 else ''}{'x' if abs(d) == 1 else f'{abs(d)}x'} " if d != 0 else "")
             + (f"{'+ ' if f > 0 and d != 0 else '- ' if f < 0 else ''}{abs(f)}" if f != 0 else "")
         ).strip()
-        # quadratic = f"y = x^2 {'+ ' if c > 0 else '- '}{abs(c)}x {'+ ' if e > 0 else '- '}{abs(e)}"
+
+        # Quadratic equation: y = x^2 + cx + e
         quadratic = (
             f"y = x^2 "
             + (f"{'+ ' if c > 0 else '- '}{'x' if abs(c) == 1 else f'{abs(c)}x'} " if c != 0 else "")
@@ -52,6 +53,7 @@ def quad_linear_system():
         for i, j in factors:
             if i + j == b:
                 return {
+                    "coefficients": [1, c, e, d, f],
                     "linear_function": linear,
                     "quadratic_function": quadratic,
                     "factored_function": f"{factored_function} = 0",
