@@ -22,13 +22,28 @@ def quad_linear_system():
         d = np.random.randint(-5, 5)
         f = np.random.randint(-10, 10)
         
-        linear = f"y = {'' if d > 0 else '-'}{abs(d)}x {'+ ' if f > 0 else '- '}{abs(f)}"
-        quadratic = f"y = x^2 {'+ ' if c > 0 else '- '}{abs(c)}x {'+ ' if e > 0 else '- '}{abs(e)}"
+        # linear = f"y = {'' if d > 0 else '-'}{abs(d)}x {'+ ' if f > 0 else '- '}{abs(f)}"
+        linear = (
+            f"y = "
+            + (f"{'-' if d == -1 else ''}{'x' if abs(d) == 1 else f'{'' if d > 0 else '-'}{abs(d)}x'} " if d != 0 else "")
+            + (f"{'+ ' if f > 0 and d != 0 else '- ' if f < 0 else ''}{abs(f)}" if f != 0 else "")
+        ).strip()
+        # quadratic = f"y = x^2 {'+ ' if c > 0 else '- '}{abs(c)}x {'+ ' if e > 0 else '- '}{abs(e)}"
+        quadratic = (
+            f"y = x^2 "
+            + (f"{'+ ' if c > 0 else '- '}{'x' if abs(c) == 1 else f'{abs(c)}x'} " if c != 0 else "")
+            + (f"{'+ ' if e > 0 and c != 0 else '- ' if e < 0 else ''}{abs(e)}" if e != 0 else "")
+        ).strip()
         
         b = c - d
         a = e - f
         
-        factored_function = f"x^2 {'+ ' if b > 0 else '- '}{abs(b)}x {'+ ' if a > 0 else '- '}{abs(a)}"
+        # factored_function = f"x^2 {'+ ' if b > 0 else '- '}{abs(b)}x {'+ ' if a > 0 else '- '}{abs(a)}"
+        factored_function = (
+            f"x^2 "
+            + (f"{'+ ' if b > 0 else '- '}{'x' if abs(b) == 1 else f'{abs(b)}x'} " if b != 0 else "")
+            + (f"{'+ ' if a > 0 and b != 0 else '- ' if a < 0 else ''}{abs(a)}" if a != 0 else "")
+        ).strip()
         if a == 0:
             continue
         
