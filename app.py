@@ -73,7 +73,9 @@ def main():
 
     st.title('Finding solutions algebraically')
     st.write("The second way to find a solution to the system is to solve the system algebraically. Here are the steps:")
-    st.write("1. Solve the linear equation for y.")
+    st.write("1. Solve the linear equation for y.(in this case, both already are solved for y)")
+    st.latex(linear_equation)
+    st.latex(quadratic_equation)
     st.write("2. Substitute the linear equation into the quadratic equation.")
     quadratic_withouty = quadratic_equation[4:]
     linear_withouty = linear_equation[4:]
