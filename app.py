@@ -5,7 +5,41 @@ import streamlit.components.v1 as components
 import asyncio
 import re
 import pandas as pd
+st.markdown(
+    """
+    <style>
+    /* Set the main background with a light mode and optional picture */
+    .stApp {
+        background: #ffffff; /* Light mode background color */
+        background-image: url(""); /* Optional background picture */
+        background-size: cover;
+        color: #000000; /* Black text for light mode */
+    }
 
+    /* Set the sidebar background with a light mode and optional picture */
+    section[data-testid="stSidebar"] {
+        background: #ffffff; /* Light gray background for sidebar */
+        background-image: url("Graph3.gif"); /* Optional sidebar picture */
+        background-size: cover;
+        color: #000000; /* Black text for light mode */
+    }
+
+    /* Ensure text is readable on light backgrounds */
+    .stMarkdown, .stTextInput, .stButton {
+        color: #000000; /* Black text */
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+with st.sidebar:
+    st.title("Steps")
+    st.write("1. Make sure both equations are solved for y.")
+    st.write("2. Substitute the linear equation into the quadratic equation.")
+    st.write("3. Solve the quadratic equation using factoring.")
+    st.write("4. Plug the solutions into the linear equation to find the y-values.")
+    st.write("5. Write the solutions as ordered pairs (x, y).")
+    st.title("Have fun!")
 st.title('LINEAR-QUADRATIC SYSTEMS')
 
 st.write('This is a quadratic-linear system generator.')
