@@ -21,7 +21,7 @@ def quad_linear_system():
         e = np.random.randint(-50, 50)  # Constant term in the quadratic equation
         d = np.random.randint(-5, 5)    # Coefficient of x in the linear equation
         f = np.random.randint(-10, 10)  # Constant term in the linear equation
-
+        
         # Linear equation: y = dx + f
         linear = (
             f"y = "
@@ -35,7 +35,11 @@ def quad_linear_system():
             + (f"{'+ ' if c > 0 else '- '}{'x' if abs(c) == 1 else f'{abs(c)}x'} " if c != 0 else "")
             + (f"{'+ ' if e > 0 and c != 0 else '- ' if e < 0 else ''}{abs(e)}" if e != 0 else "")
         ).strip()
-        
+        df = pd.DataFrame({
+            'x': [x],
+            f'{linear}': [d*x + f],
+            f'{quadratic}': [x**2 + c*x + e]
+        })
         b = c - d
         a = e - f
         
@@ -60,7 +64,8 @@ def quad_linear_system():
                     "factors": f"(x {'-' if i < 0 else '+'} {abs(i)})(x {'-' if j < 0 else '+'} {abs(j)}) = 0",
                     "roots": [f"x = {'' if i < 0 else '-'} {abs(i)},  x = {'' if j < 0 else '-'} {abs(j)}"],
                     "substitution": [f"y = {d}({-i})+{f} = {-i*d + f}", f"y = {d}({-j})+{f} = {-j*d + f}"],
-                    "solutions": [f"( {-i}, {-i*d + f})",f"({-j}, {-j*d + f})"]
+                    "solutions": [f"( {-i}, {-i*d + f})",f"({-j}, {-j*d + f})"],
+                    "table of values": df.to_string() 
                 }
 
 class Chatbot(Resource):
