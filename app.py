@@ -4,7 +4,7 @@ import numpy as np
 import streamlit.components.v1 as components
 import asyncio
 import re
-
+import pandas as pd
 
 st.title('LINEAR-QUADRATIC SYSTEMS')
 
@@ -70,6 +70,25 @@ def main():
     # Pass the dynamically generated equations to Desmos
     desmos_integration(quadratic_equation, linear_equation)
     st.write('You can also check the table of values to find the intersection points....')
+    # Get the table of values from the API response
+    table_of_values = pd.DataFrame(quad_system_response.json()['table of values'])
+
+    # Define a function to highlight rows where the linear and quadratic values are equal
+    def highlight_equal_rows(row):
+        linear_col = table_of_values.columns[1]  # Assuming the second column is the linear function
+        quadratic_col = table_of_values.columns[2]  # Assuming the third column is the quadratic function
+        if row[linear_col] == row[quadratic_col]:
+            return ['background-color: green'] * len(row)
+        else:
+            return [''] * len(row)
+
+    # Apply the highlighting function
+    styled_table = table_of_values.style.apply(highlight_equal_rows, axis=1)
+
+    # Display the styled DataFrame in Streamlit
+    st.dataframe(styled_table, width=400, height=400)
+    
+    
     
 
     st.title('Finding solutions algebraically')
