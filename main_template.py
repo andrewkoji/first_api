@@ -35,10 +35,11 @@ def quad_linear_system():
             + (f"{'+ ' if c > 0 else '- '}{'x' if abs(c) == 1 else f'{abs(c)}x'} " if c != 0 else "")
             + (f"{'+ ' if e > 0 and c != 0 else '- ' if e < 0 else ''}{abs(e)}" if e != 0 else "")
         ).strip()
+        x_values = np.arange(-10, 11)
         df = pd.DataFrame({
-            'x': [x],
-            f'{linear}': [d*x + f],
-            f'{quadratic}': [x**2 + c*x + e]
+            'x': x_values,  # Directly assign the array to the 'x' column
+            f'{linear}': [d * t + f for t in x_values],
+            f'{quadratic}': [t**2 + c * t + e for t in x_values]
         })
         b = c - d
         a = e - f
@@ -65,7 +66,7 @@ def quad_linear_system():
                     "roots": [f"x = {'' if i < 0 else '-'} {abs(i)},  x = {'' if j < 0 else '-'} {abs(j)}"],
                     "substitution": [f"y = {d}({-i})+{f} = {-i*d + f}", f"y = {d}({-j})+{f} = {-j*d + f}"],
                     "solutions": [f"( {-i}, {-i*d + f})",f"({-j}, {-j*d + f})"],
-                    "table of values": df.to_string() 
+                    "table of values": df.to_dict(orient="records") 
                 }
 
 class Chatbot(Resource):

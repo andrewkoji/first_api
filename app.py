@@ -69,8 +69,9 @@ def main():
     st.latex(solutions[0] + ',' + solutions[1])
     # Pass the dynamically generated equations to Desmos
     desmos_integration(quadratic_equation, linear_equation)
-    st.write('You can also check the table of values to find the intersection points')
+    st.write('You can also check the table of values to find the intersection points....')
     
+
     st.title('Finding solutions algebraically')
     st.write("The second way to find a solution to the system is to solve the system algebraically. Here are the steps:")
     st.write("1. Solve the linear equation for y.(in this case, both already are solved for y)")
