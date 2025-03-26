@@ -11,7 +11,7 @@ st.title('LINEAR-QUADRATIC SYSTEMS')
 st.write('This is a quadratic-linear system generator.')
 
 # User input
-question = st.text_input("Enter your question: ")
+question = st.text_input("Enter any questions you have about linear-quadratic systems: ")
 quad_system_response = requests.get(
     'https://first-api-y6hb.onrender.com/quadratic-system'
 )
@@ -107,6 +107,7 @@ def main():
     st.latex(quad_system_response.json()['factors'])
     st.latex(quad_system_response.json()['roots'][0])
     st.write("4. Plug them into the linear equation to find the y-values.")
+    st.latex(linear_equation)
     st.latex(quad_system_response.json()['substitution'][0])
     st.latex(quad_system_response.json()['substitution'][1])
     st.write("5. Write the solutions as ordered pairs (x, y).")
