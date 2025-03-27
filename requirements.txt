@@ -9,3 +9,4 @@ pdfplumber
 pandas
 numpy
 streamlit
+flask-cors
