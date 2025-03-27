@@ -11,7 +11,7 @@ st.markdown(
     /* Set the main background with a light mode and optional picture */
     .stApp {
         background: #ffffff; /* Light mode background color */
-        background-image: url(""); /* Optional background picture */
+        background-image: url("/cimages/multimages/16/system2401008797131253426.png"); /* Optional background picture */
         background-size: cover;
         color: #000000; /* Black text for light mode */
     }
