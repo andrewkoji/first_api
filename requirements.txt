@@ -12,3 +12,4 @@ streamlit
 flask-cors
 matplotlib
 seaborn
+openpyxl
