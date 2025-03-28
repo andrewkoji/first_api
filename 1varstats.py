@@ -131,3 +131,8 @@ min = period1['MP3 Test (1x)'].min()
 st.markdown(f"<h3 style='text-align: center;color: red'>Range: MAX - MIN</h3>", unsafe_allow_html=True)
 st.markdown(f"<h3 style='text-align: center;'>{max} - {min}</h3>", unsafe_allow_html=True)
 st.markdown(f"<h3 style='text-align: center;'>Range = {range}</h3>", unsafe_allow_html=True)
+
+
+
+if __name__ == '__main__':
+    main()
