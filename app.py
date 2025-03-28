@@ -46,16 +46,7 @@ st.write('This is a quadratic-linear system generator.')
 
 # User input
 question = st.text_input("Enter any questions you have about linear-quadratic systems: ")
-quad_system_response = requests.get(
-    'https://first-api-y6hb.onrender.com/quadratic-system'
-)
 
-
-# Display the equations in Streamlit
-st.write('Shown below is a quadratic function and a linear function, both solved for y:')
-quadratic_equation = quad_system_response.json()['quadratic_function']
-linear_equation = quad_system_response.json()['linear_function']
-solutions = quad_system_response.json()['solutions']
 if question:
     response = requests.get(
         'https://first-api-y6hb.onrender.com/chatbot',
@@ -66,6 +57,18 @@ if question:
         st.write("Response:", answer)
     else:
         st.write("Error fetching response from API.")
+        
+quad_system_response = requests.get(
+    'https://first-api-y6hb.onrender.com/quadratic-system'
+)
+
+
+# Display the equations in Streamlit
+st.write('Shown below is a quadratic function and a linear function, both solved for y:')
+quadratic_equation = quad_system_response.json()['quadratic_function']
+linear_equation = quad_system_response.json()['linear_function']
+solutions = quad_system_response.json()['solutions']
+
 st.latex(quadratic_equation)
 st.latex(linear_equation)
 
