@@ -97,11 +97,11 @@ def main():
         # Add checkboxes for toggling vertical lines on the boxplot
         st.title("**Boxplot Options**")
         ############## Boxplot Options #################
-        show_mean2 = st.checkbox("Show Mean (Boxplot)", value=False)
-        show_median2 = st.checkbox("Show Median (Boxplot)", value=True)
-        show_q1_2 = st.checkbox("Show Q1 (Boxplot)", value=True)
-        show_q3_2 = st.checkbox("Show Q3 (Boxplot)", value=True)
-        show_std_dev_2 = st.checkbox("Show Standard Deviations (Boxplot)", value=False)
+        show_mean2 = st.checkbox("Show Mean", value=False)
+        show_median2 = st.checkbox("Show Median", value=True)
+        show_q1_2 = st.checkbox("Show Q1", value=True)
+        show_q3_2 = st.checkbox("Show Q3", value=True)
+        show_std_dev_2 = st.checkbox("Show Standard Deviations", value=False)
         show_q1_2 = st.checkbox("Show Legend", value=True)
     
 
