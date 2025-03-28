@@ -11,3 +11,4 @@ numpy
 streamlit
 flask-cors
 matplotlib
+seaborn
