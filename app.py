@@ -57,7 +57,7 @@ if question:
         st.write("Response:", answer)
     else:
         st.write("Error fetching response from API.")
-        
+
 quad_system_response = requests.get(
     'https://first-api-y6hb.onrender.com/quadratic-system'
 )
@@ -81,7 +81,7 @@ def desmos_integration(quadratic_eq, linear_eq, solution_set=None):
     
     desmos_script = f"""
     <script src="https://www.desmos.com/api/v1.6/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
-    <div id="calculator" style="width: 600px; height: 800px;length: 800px"></div>
+    <div id="calculator" style="width: 1500px; height: 1500px;length: 1500px"></div>
     <script>
         var elt = document.getElementById('calculator');
         var calculator = Desmos.GraphingCalculator(elt, {{

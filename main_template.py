@@ -18,7 +18,7 @@ swagger = Swagger(app)
 openai.api_key = os.getenv("OPENAI_API_KEY")
 def quad_linear_system():
     while True:
-        x = np.random.randint(-10, 10)
+        x = np.random.randint(-15, 15)
         c = np.random.randint(-10, 10)  # Coefficient of x in the quadratic equation
         e = np.random.randint(-50, 50)  # Constant term in the quadratic equation
         d = np.random.randint(-5, 5)    # Coefficient of x in the linear equation
