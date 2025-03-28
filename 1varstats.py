@@ -8,36 +8,36 @@ import seaborn as sns
 
 
 def main():
-    st.markdown(
-        """
-        <style>
-        /* Set the main background with a light mode and optional picture */
-        .stApp {
-            background: #ffffff; /* Light mode background color */
-            background-image: url("/cimages/multimages/16/system2401008797131253426.png"); /* Optional background picture */
-            background-size: cover;
-            color: #000000; /* Black text for light mode */
-        }
+    # st.markdown(
+    #     """
+    #     <style>
+    #     /* Set the main background with a light mode and optional picture */
+    #     .stApp {
+    #         background: #ffffff; /* Light mode background color */
+    #         background-image: url("/cimages/multimages/16/system2401008797131253426.png"); /* Optional background picture */
+    #         background-size: cover;
+    #         color: #000000; /* Black text for light mode */
+    #     }
 
-        /* Set the sidebar background with a light mode and optional picture */
-        section[data-testid="stSidebar"] {
-            background: #ffffff; /* Light gray background for sidebar */
-            background-image: url("Graph3.gif"); /* Optional sidebar picture */
-            background-size: cover;
-            color: #000000; /* Black text for light mode */
-        }
+    #     /* Set the sidebar background with a light mode and optional picture */
+    #     section[data-testid="stSidebar"] {
+    #         background: #ffffff; /* Light gray background for sidebar */
+    #         background-image: url("Graph3.gif"); /* Optional sidebar picture */
+    #         background-size: cover;
+    #         color: #000000; /* Black text for light mode */
+    #     }
 
-        /* Ensure text is readable on light backgrounds */
-        .stMarkdown, .stTextInput, .stButton {
-            color: #000000; /* Black text */
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-    st.title('MP3 Test Grades')
+    #     /* Ensure text is readable on light backgrounds */
+    #     .stMarkdown, .stTextInput, .stButton {
+    #         color: #000000; /* Black text */
+    #     }
+    #     </style>
+    #     """,
+    #     unsafe_allow_html=True
+    # )
+    # st.title('MP3 Test Grades')
 
-    period1 = pd.read_excel('period5grades.xlsx').sort_values(by='MP3 Test (1x)')
+    period1 = pd.read_excel('period9grades.xlsx').sort_values(by='MP3 Test (1x)')
     st.markdown("<h3 style='text-align: center;'>MP3 Test Grades</h3>", unsafe_allow_html=True)
     st.markdown(f"<h3 style='text-align: center;'>{', '.join(map(str, period1['MP3 Test (1x)'].tolist()))}</h3>", unsafe_allow_html=True)
     # st.write("", ", ".join(map(str, period1['MP3 Test (1x)'].tolist())))
