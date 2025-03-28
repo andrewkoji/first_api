@@ -56,12 +56,6 @@ st.write('Shown below is a quadratic function and a linear function, both solved
 quadratic_equation = quad_system_response.json()['quadratic_function']
 linear_equation = quad_system_response.json()['linear_function']
 solutions = quad_system_response.json()['solutions']
-
-st.latex(quadratic_equation)
-st.latex(linear_equation)
-
-
-# API Call (for chatbot response)
 if question:
     response = requests.get(
         'https://first-api-y6hb.onrender.com/chatbot',
@@ -72,6 +66,12 @@ if question:
         st.write("Response:", answer)
     else:
         st.write("Error fetching response from API.")
+st.latex(quadratic_equation)
+st.latex(linear_equation)
+
+
+# API Call (for chatbot response)
+
 
 # Function to integrate Desmos graph
 def desmos_integration(quadratic_eq, linear_eq, solution_set=None):
