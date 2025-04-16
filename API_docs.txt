@@ -1,0 +1,43 @@
+This is an algebra curriculum that will be built in streamlit. A custom API will be developed with custom programs and applications for
+algebra instructors to use in the classroom. 
+
+The business problem:
+
+For too long, students in high school have been stuck learning from pencil and paper assignments while missing many key concepts that can
+be explained more effectively with the use of technology. Students struggle with learning mathematical concepts because of the takeover
+of texas instruments, causing students to be stuck using the ti84 plus calculator to answer all questions on a high stakes exam. 
+Furthermore, the issue compounds itself as there are many math instructors stuck using the tool for instruction as the calculator is the 
+only tool allowed on the exam. 
+
+This is a problem for a few reasons:
+1. Not every student has access to a TI84 plus calculator.
+2. Not every school district has the same access to funding for graphing calculators. 
+3. Not all mathematical concepts can be explained as effectively with graphing calculators. 
+
+- Calculator use is a skill that needs to be taught in math classrooms. When kids do not have calculators at home, they can't practice
+as they do in class. 
+- Being able to compute answers or data information should be more easily accessible. 
+
+This curriculum is an attempt to revamp the algebra curriculum to develop effective instructional deliverables that utilize technology.
+Mathematical applications are available but costly. 
+Competitors: Mathbits(top pick), Emathinstriuction(popular, but not great), IXL(being phased out)
+
+As long as students need to know algebra, this curriculum will be useful. Yes you need algebra specific material, but the apps will be
+developed with conceptual undersranding being the purpose of design at the forefront.
+
+
+#Current topics developed or in production
+
+
+
+
+Quadratics:
+Linear-Quadratic Systems
+
+
+STATS:
+1varstats
+LinearRegression
+
+
+ 

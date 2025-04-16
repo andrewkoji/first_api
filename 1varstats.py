@@ -97,6 +97,8 @@ def main():
         # Add checkboxes for toggling vertical lines on the boxplot
         st.title("**Boxplot Options**")
         ############## Boxplot Options #################
+        show_max = st.checkbox("Show Maximum", value=True)
+        show_min = st.checkbox("Show Minimum", value=True)
         show_mean2 = st.checkbox("Show Mean (Boxplot)", value=False)
         show_median2 = st.checkbox("Show Median (Boxplot)", value=True)
         show_q1_2 = st.checkbox("Show Q1 (Boxplot)", value=True)
@@ -159,6 +161,10 @@ def main():
             ax.axvline(q1, color="blue", linestyle="--", label="Q1")
         if show_q3:
             ax.axvline(q3, color="blue", linestyle="--", label="Q3")
+        if show_max:
+            ax.axvline(period1['MP3 Test (1x)'].max(), color="red", linestyle="--", label="Max")
+        if show_min:
+            ax.axvline(period1['MP3 Test (1x)'].min(), color="red", linestyle="--", label="Min")
         if show_std_dev:
             ax.axvline(mean + std, color="orange", linestyle="--", label="Mean + 1 Std Dev")
             ax.axvline(mean - std, color="orange", linestyle="--", label="Mean - 1 Std Dev")
@@ -190,6 +196,10 @@ def main():
         
 
         # Add vertical lines to the boxplot based on checkbox selections
+        if show_max:
+            ax2.axvline(period1['MP3 Test (1x)'].max(), color="red", linestyle="--", label="Max")
+        if show_min:
+            ax2.axvline(period1['MP3 Test (1x)'].min(), color="red", linestyle="--", label="Min")
         if show_mean2:
             ax2.axvline(mean, color="green", linestyle="--", label="Mean")
         if show_median2:
