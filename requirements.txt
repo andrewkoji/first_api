@@ -13,3 +13,6 @@ flask-cors
 matplotlib
 seaborn
 openpyxl
+fastapi
+uvicorn
+fastapi-utils
