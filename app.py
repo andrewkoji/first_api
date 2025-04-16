@@ -49,7 +49,7 @@ question = st.text_input("Enter any questions you have about linear-quadratic sy
 
 if question:
     response = requests.get(
-        'https://first-api-y6hb.onrender.com/chatbot',
+        'https://fastapi-b6dv.onrender.com/chatbot',
         params={'prompt': f"Answer this question: {question}"}
     )
     if response.status_code == 200:
@@ -59,7 +59,7 @@ if question:
         st.write("Error fetching response from API.")
 
 quad_system_response = requests.get(
-    'https://first-api-y6hb.onrender.com/quadratic-system'
+    'https://fastapi-b6dv.onrender.com/quadratic-system'
 )
 
 

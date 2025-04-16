@@ -30,7 +30,7 @@ elif usefile == 'NO':
 
 # Send extracted text and question to the API
 response = requests.get(
-    'https://first-api-y6hb.onrender.com/chatbot',
+    'https://fastapi-b6dv.onrender.com/chatbot',
     params={'prompt': f"Based on this content: {content}\nQuestion: {question}"}
 )
 
