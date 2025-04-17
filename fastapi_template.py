@@ -117,7 +117,7 @@ def generate_linear_equation():
 
         return {
             "equation": equation,
-            "slope": float(m),  # Return slope as a float for compatibility
+            "slope": str(m),  # Return slope as a string representation of the fraction
             "y_intercept": float(b),  # Return y-intercept as a float for compatibility
             "table_of_values": table_of_values
         }
