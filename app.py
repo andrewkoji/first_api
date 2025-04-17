@@ -70,17 +70,25 @@ st.title('LINEAR-QUADRATIC SYSTEMS')
 
 st.write('This is a quadratic-linear system generator.')
 
-# Initialize the response variable
-quad_system_response = None
+# Initialize session state for the chatbot response and system response
+if "chatbot_response" not in st.session_state:
+    st.session_state.chatbot_response = None
+if "quad_system_response" not in st.session_state:
+    st.session_state.quad_system_response = None
 
 # Add a button to generate a new system
 if st.button("Generate New System"):
-    quad_system_response = requests.get(
-        'https://fastapi-b6dv.onrender.com/quadratic-system'
-    )
+    response = requests.get('https://fastapi-b6dv.onrender.com/quadratic-system')
+    if response.status_code == 200:
+        st.session_state.quad_system_response = response.json()
+    else:
+        st.write("Error fetching quadratic-linear system.")
+
+# Use the session state for quad_system_response
+quad_system_response = st.session_state.quad_system_response
 
 # Ensure the response is fetched if the button is clicked
-if quad_system_response and quad_system_response.status_code == 200:
+if quad_system_response:
     # User input
     question = st.text_input("Enter any questions you have about linear-quadratic systems: ")
 
@@ -90,28 +98,22 @@ if quad_system_response and quad_system_response.status_code == 200:
             params={'prompt': f"Answer this question: {question}"}
         )
         if response.status_code == 200:
-            answer = response.json().get('answer', 'No response received.')
-            st.write("Response:", answer)
+            st.session_state.chatbot_response = response.json().get('answer', 'No response received.')
         else:
-            st.write("Error fetching response from API.")
+            st.session_state.chatbot_response = "Error fetching response from API."
 
-    quad_system_response = requests.get(
-        'https://fastapi-b6dv.onrender.com/quadratic-system'
-    )
-
+    # Display the chatbot response
+    if st.session_state.chatbot_response:
+        st.write("Response:", st.session_state.chatbot_response)
 
     # Display the equations in Streamlit
     st.write('Shown below is a quadratic function and a linear function, both solved for y:')
-    quadratic_equation = quad_system_response.json()['quadratic_function']
-    linear_equation = quad_system_response.json()['linear_function']
-    solutions = quad_system_response.json()['solutions']
+    quadratic_equation = quad_system_response['quadratic_function']
+    linear_equation = quad_system_response['linear_function']
+    solutions = quad_system_response['solutions']
 
     st.latex(quadratic_equation)
     st.latex(linear_equation)
-
-
-    # API Call (for chatbot response)
-
 
     # Function to integrate Desmos graph
     def desmos_integration(quadratic_eq, linear_eq, solution_set=None):
@@ -145,7 +147,7 @@ if quad_system_response and quad_system_response.status_code == 200:
         desmos_integration(quadratic_equation, linear_equation)
         st.write('You can also check the table of values to find the intersection points....')
         # Get the table of values from the API response
-        table_of_values = pd.DataFrame(quad_system_response.json()['table of values'])
+        table_of_values = pd.DataFrame(quad_system_response['table of values'])
 
         # Define a function to highlight rows where the linear and quadratic values are equal
         def highlight_equal_rows(row):
@@ -175,17 +177,17 @@ if quad_system_response and quad_system_response.status_code == 200:
         linear_withouty = linear_equation[4:]
         st.latex(quadratic_withouty + ' = ' + linear_withouty)
         st.write("move all terms to one side of the equation to get:")
-        st.latex(quad_system_response.json()['factored_function'])
+        st.latex(quad_system_response['factored_function'])
         
         st.write("3. Solve the quadratic equation using factoring.")
-        st.latex(quad_system_response.json()['factors'])
-        st.latex(quad_system_response.json()['roots'][0])
+        st.latex(quad_system_response['factors'])
+        st.latex(quad_system_response['roots'][0])
         st.write("4. Plug them into the linear equation to find the y-values.")
         st.latex(linear_equation)
-        st.latex(quad_system_response.json()['substitution'][0])
-        st.latex(quad_system_response.json()['substitution'][1])
+        st.latex(quad_system_response['substitution'][0])
+        st.latex(quad_system_response['substitution'][1])
         st.write("5. Write the solutions as ordered pairs (x, y).")
-        st.latex(quad_system_response.json()['solutions'][0] + ','+ quad_system_response.json()['solutions'][1])
+        st.latex(quad_system_response['solutions'][0] + ','+ quad_system_response['solutions'][1])
 
 
 
