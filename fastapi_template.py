@@ -7,6 +7,8 @@ import pandas as pd
 import numpy as np
 import random
 import fractions
+import signal
+import sys
 
 app = FastAPI()
 
@@ -156,8 +158,16 @@ async def root():
     """
     return {"message": "Welcome to the Quadratic-Linear System API. Use /quadratic-system or /chatbot endpoints."}
 
+# Graceful shutdown handler
+def shutdown_handler(signum, frame):
+    print("Shutting down gracefully...")
+    sys.exit(0)
+
+signal.signal(signal.SIGTERM, shutdown_handler)
 
 if __name__ == "__main__":
     import uvicorn
-    # Use the import string "fastapi_template:app" for reload to work
-    uvicorn.run("fastapi_template:app", host="127.0.0.1", port=8000, reload=True)
+    import os
+    # Use the PORT environment variable provided by Render
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run("fastapi_template:app", host="0.0.0.0", port=port, reload=True)
