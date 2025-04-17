@@ -112,6 +112,14 @@ async def get_chatbot_response(prompt: str = Query(..., description="The prompt 
         raise HTTPException(status_code=500, detail=f"Failed to get response from OpenAI: {str(e)}")
 
 
+@app.get("/", tags=["Default"])
+async def root():
+    """
+    Default route for the root endpoint.
+    """
+    return {"message": "Welcome to the Quadratic-Linear System API. Use /quadratic-system or /chatbot endpoints."}
+
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=8000, reload=True)
