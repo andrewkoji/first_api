@@ -107,8 +107,8 @@ def generate_linear_equation():
 
     return {
         "equation": equation,
-        "slope": float(m),
-        "y_intercept": float(b),
+        "slope": m,  # Return slope as a Fraction
+        "y_intercept": b,  # Return y-intercept as a Fraction
         "table_of_values": table_of_values
     }
 
