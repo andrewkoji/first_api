@@ -100,7 +100,7 @@ def generate_linear_equation():
 
     # Generate a table of values with integer coordinates
     x_values = np.arange(-10, 11)  # x values from -10 to 10
-    y_values = [m * x + b for x in x_values if (m * x + b).denominator == 1]  # Only integer y values
+    y_values = [m * x + b for x in x_values if isinstance(m * x + b, fractions.Fraction) and (m * x + b).denominator == 1]  # Only integer y values
     table_of_values = [{"x": x, "y": int(y)} for x, y in zip(x_values, y_values)]
 
     return {
