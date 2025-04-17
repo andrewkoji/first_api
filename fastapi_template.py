@@ -158,6 +158,13 @@ async def root():
     """
     return {"message": "Welcome to the Quadratic-Linear System API. Use /quadratic-system or /chatbot endpoints."}
 
+@app.head("/", tags=["Default"])
+async def root_head():
+    """
+    Explicitly handle HEAD requests for the root endpoint.
+    """
+    return {"message": "Welcome to the Quadratic-Linear System API."}
+
 # Graceful shutdown handler
 def shutdown_handler(signum, frame):
     print("Shutting down gracefully...")
