@@ -98,11 +98,10 @@ def generate_linear_equation():
         slope_part = f"{m}x" if m != 1 else "x"
         equation = f"y = {slope_part} {'+' if b > 0 else '-'} {abs(b)}"
 
-    # Generate a table of values using pandas
+    # Generate a table of values with integer coordinates
     x_values = np.arange(-10, 11)  # x values from -10 to 10
-    y_values = [float(m) * x + b for x in x_values]  # Calculate corresponding y values
-    df = pd.DataFrame({"x": x_values, "y": y_values})  # Create a DataFrame
-    table_of_values = df.to_dict(orient="records")  # Convert DataFrame to a list of dictionaries
+    y_values = [m * x + b for x in x_values if (m * x + b).denominator == 1]  # Only integer y values
+    table_of_values = [{"x": x, "y": int(y)} for x, y in zip(x_values, y_values)]
 
     return {
         "equation": equation,
