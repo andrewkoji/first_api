@@ -9,6 +9,11 @@ import random
 import fractions
 import signal
 import sys
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
@@ -82,35 +87,45 @@ def quad_linear_system():
 
 def generate_linear_equation():
     """Generate a random linear equation in slope-intercept form (y = mx + b)."""
-    numerator = random.randint(-10, 10)  # Random numerator
-    denominator = random.randint(1, 10)  # Random denominator (non-zero)
-    m = fractions.Fraction(numerator, denominator)  # Slope as a fraction
-    b = fractions.Fraction(random.randint(-10, 10))  # Ensure b is a Fraction
+    try:
+        numerator = random.randint(-10, 10)  # Random numerator
+        denominator = random.randint(1, 10)  # Random denominator (non-zero)
+        m = fractions.Fraction(numerator, denominator)  # Slope as a fraction
+        b = fractions.Fraction(random.randint(-10, 10))  # Ensure b is a Fraction
 
-    if m == 0:
-        # If slope is 0, the equation is a horizontal line
-        equation = f"y = {b}"
-    elif b == 0:
-        # If y-intercept is 0, omit it from the equation
-        equation = f"y = {m}x" if m != 1 else "y = x"
-    else:
-        # General case
-        slope_part = f"{m}x" if m != 1 else "x"
-        equation = f"y = {slope_part} {'+' if b > 0 else '-'} {abs(b)}"
+        if m == 0:
+            # If slope is 0, the equation is a horizontal line
+            equation = f"y = {b}"
+        elif b == 0:
+            # If y-intercept is 0, omit it from the equation
+            equation = f"y = {m}x" if m != 1 else "y = x"
+        else:
+            # General case
+            slope_part = f"{m}x" if m != 1 else "x"
+            equation = f"y = {slope_part} {'+' if b > 0 else '-'} {abs(b)}"
 
-    # Generate a table of values with integer coordinates
-    table_of_values = []
-    for x in range(-10, 11):  # x values from -10 to 10
-        y = m * x + b
-        if y.denominator == 1:  # Only include points where y is an integer
-            table_of_values.append({"x": x, "y": int(y)})
+        # Generate a table of values with integer coordinates
+        table_of_values = []
+        for x in range(-10, 11):  # x values from -10 to 10
+            y = m * x + b
+            if y.denominator == 1:  # Only include points where y is an integer
+                table_of_values.append({"x": x, "y": int(y)})
 
-    return {
-        "equation": equation,
-        "slope": m,  # Return slope as a Fraction
-        "y_intercept": b,  # Return y-intercept as a Fraction
-        "table_of_values": table_of_values
-    }
+        # Log the generated equation and table
+        logger.info(f"Generated equation: {equation}")
+        logger.info(f"Table of values: {table_of_values}")
+
+        return {
+            "equation": equation,
+            "slope": float(m),  # Return slope as a float for compatibility
+            "y_intercept": float(b),  # Return y-intercept as a float for compatibility
+            "table_of_values": table_of_values
+        }
+    except Exception as e:
+        # Log the error and raise an HTTPException
+        logger.error(f"Error generating linear equation: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to generate linear equation: {str(e)}")
+
 
 @app.get("/linear-equation", tags=["Linear Equation Generator"])
 async def get_linear_equation():
