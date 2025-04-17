@@ -5,6 +5,8 @@ import openai
 import os
 import pandas as pd
 import numpy as np
+import random
+import fractions
 
 app = FastAPI()
 
@@ -76,6 +78,41 @@ def quad_linear_system():
                 }
 
 
+def generate_linear_equation():
+    """Generate a random linear equation in slope-intercept form (y = mx + b)."""
+    numerator = random.randint(-10, 10)  # Random numerator
+    denominator = random.randint(1, 10)  # Random denominator (non-zero)
+    m = fractions.Fraction(numerator, denominator)  # Slope as a fraction
+    b = random.randint(-10, 10)  # Random y-intercept
+
+    if m == 0:
+        # If slope is 0, the equation is a horizontal line
+        equation = f"y = {b}"
+    elif b == 0:
+        # If y-intercept is 0, omit it from the equation
+        equation = f"y = {m}x" if m != 1 else "y = x"
+    else:
+        # General case
+        slope_part = f"{m}x" if m != 1 else "x"
+        equation = f"y = {slope_part} {'+' if b > 0 else '-'} {abs(b)}"
+
+    return {
+        "equation": equation,
+        "slope": float(m),
+        "y_intercept": b
+    }
+
+@app.get("/linear-equation", tags=["Linear Equation Generator"])
+async def get_linear_equation():
+    """
+    Returns a randomly generated linear equation in slope-intercept form.
+    """
+    try:
+        return generate_linear_equation()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to generate linear equation: {str(e)}")
+
+
 @app.get("/quadratic-system", tags=["Quadratic System Generator"])
 async def get_quadratic_system():
     """
@@ -122,4 +159,5 @@ async def root():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000, reload=True)
+    # Use the import string "fastapi_template:app" for reload to work
+    uvicorn.run("fastapi_template:app", host="127.0.0.1", port=8000, reload=True)
