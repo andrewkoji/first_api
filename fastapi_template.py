@@ -85,7 +85,7 @@ def generate_linear_equation():
     numerator = random.randint(-10, 10)  # Random numerator
     denominator = random.randint(1, 10)  # Random denominator (non-zero)
     m = fractions.Fraction(numerator, denominator)  # Slope as a fraction
-    b = random.randint(-10, 10)  # Random y-intercept
+    b = fractions.Fraction(random.randint(-10, 10))  # Ensure b is a Fraction
 
     if m == 0:
         # If slope is 0, the equation is a horizontal line
@@ -99,14 +99,16 @@ def generate_linear_equation():
         equation = f"y = {slope_part} {'+' if b > 0 else '-'} {abs(b)}"
 
     # Generate a table of values with integer coordinates
-    x_values = np.arange(-10, 11)  # x values from -10 to 10
-    y_values = [m * x + b for x in x_values if isinstance(m * x + b, fractions.Fraction) and (m * x + b).denominator == 1]  # Only integer y values
-    table_of_values = [{"x": x, "y": int(y)} for x, y in zip(x_values, y_values)]
+    table_of_values = []
+    for x in range(-10, 11):  # x values from -10 to 10
+        y = m * x + b
+        if y.denominator == 1:  # Only include points where y is an integer
+            table_of_values.append({"x": x, "y": int(y)})
 
     return {
         "equation": equation,
         "slope": float(m),
-        "y_intercept": b,
+        "y_intercept": float(b),
         "table_of_values": table_of_values
     }
 
