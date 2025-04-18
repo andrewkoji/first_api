@@ -179,7 +179,7 @@ async def get_latex_textbox():
     """
     Returns the HTML and JavaScript code for a LaTeX textbox to be used in Streamlit apps.
     """
-    html_code = r"""
+    latex_html_code = r"""
     <div style="text-align: center;">
         <div id="latex-output" style="margin-top: 20px; font-size: 20px; color: black; display: inline-block; border: 1px solid #ccc; padding: 10px; min-height: 50px; position: relative; background-color: white; border-radius: 10px;">
             <span style="color: gray; position: center" id="placeholder">Answer here...</span>
@@ -237,7 +237,7 @@ async def get_latex_textbox():
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css">
     <script src="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js"></script>
     """
-    return {"html_code": html_code}
+    return {"latex_html_code": latex_html_code}
 
 
 @app.get("/", tags=["Default"])
