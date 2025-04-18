@@ -205,8 +205,8 @@ async def get_latex_textbox():
         input.addEventListener("input", () => {
             let latex = input.value;
 
-            // Automatically convert fractions like "2/3" into "\\frac{2}{3}"
-            latex = latex.replace(/(\d+)\/(\d+)/g, "\\\\frac{$1}{$2}");
+            // Automatically convert fractions like "2/3" into "\frac{2}{3}"
+            latex = latex.replace(/(\d+)\/(\d+)/g, "\\frac{$1}{$2}");
 
             if (latex.trim() === "") {
                 placeholder.style.display = "inline";
