@@ -206,7 +206,7 @@ async def get_latex_textbox():
             let latex = input.value;
 
             // Automatically convert fractions like "2/3" into "\\frac{2}{3}"
-            latex = latex.replace(/(\d+)\/(\d+)/g, "\\frac{$1}{$2}");
+            latex = latex.replace(/([a-zA-Z\d\(\)]+)\/([a-zA-Z\d\(\)]+)/g, "\\frac{$1}{$2}");
 
             if (latex.trim() === "") {
                 placeholder.style.display = "inline";
