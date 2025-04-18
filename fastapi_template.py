@@ -174,6 +174,72 @@ async def get_chatbot_response(prompt: str = Query(..., description="The prompt 
         raise HTTPException(status_code=500, detail=f"Failed to get response from OpenAI: {str(e)}")
 
 
+@app.get("/latex-textbox", tags=["LaTeX Textbox"])
+async def get_latex_textbox():
+    """
+    Returns the HTML and JavaScript code for a LaTeX textbox to be used in Streamlit apps.
+    """
+    html_code = r"""
+    <div style="text-align: center;">
+        <div id="latex-output" style="margin-top: 20px; font-size: 20px; color: black; display: inline-block; border: 1px solid #ccc; padding: 10px; min-height: 50px; position: relative; background-color: white; border-radius: 10px;">
+            <span style="color: gray; position: center" id="placeholder">Answer here...</span>
+            <span id="cursor" style="display: block; position: absolute; width: 2px; height: 20px; background-color: black; animation: blink 1s step-end infinite;"></span>
+        </div>
+        <textarea id="latex-input" placeholder="Enter LaTeX expression..." style="opacity: 0; position: absolute; z-index: -1;"></textarea>
+    </div>
+    <script>
+        const input = document.getElementById("latex-input");
+        const output = document.getElementById("latex-output");
+        const placeholder = document.getElementById("placeholder");
+        const cursor = document.getElementById("cursor");
+
+        // Focus on the hidden input when clicking the rendered LaTeX area
+        output.addEventListener("click", () => {
+            input.focus();
+        });
+
+        // Update the rendered LaTeX in real-time as the user types
+        input.addEventListener("input", () => {
+            let latex = input.value;
+
+            // Automatically convert fractions like "2/3" into "\\frac{2}{3}"
+            latex = latex.replace(/(\d+)\/(\d+)/g, "\\\\frac{$1}{$2}");
+
+            if (latex.trim() === "") {
+                placeholder.style.display = "inline";
+                output.innerHTML = "";
+            } else {
+                placeholder.style.display = "none";
+                output.innerHTML = katex.renderToString(latex, { throwOnError: false });
+            }
+
+            // Update the input value with the transformed LaTeX
+            input.value = latex;
+        });
+
+        // Ensure the cursor stays visible even when the input loses focus
+        input.addEventListener("blur", () => {
+            cursor.style.display = "block";
+        });
+
+        // Automatically focus on the hidden input when the page loads
+        window.onload = () => {
+            input.focus();
+        };
+    </script>
+    <style>
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js"></script>
+    """
+    return {"html_code": html_code}
+
+
 @app.get("/", tags=["Default"])
 async def root():
     """
