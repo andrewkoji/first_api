@@ -20,7 +20,10 @@ app = FastAPI()
 # Enable CORS for your Streamlit app
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://linear-quadratic-system.onrender.com"],
+    allow_origins=[
+        "https://linear-quadratic-system.onrender.com",
+        "http://localhost:8501"  # Add localhost for testing
+    ],
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -256,7 +259,8 @@ async def root_head():
 
 # Graceful shutdown handler
 def shutdown_handler(signum, frame):
-    print("Shutting down gracefully...")
+    logger.info("Shutting down gracefully...")
+    # Perform any necessary cleanup here
     sys.exit(0)
 
 signal.signal(signal.SIGTERM, shutdown_handler)
