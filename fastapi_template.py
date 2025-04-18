@@ -213,7 +213,11 @@ async def get_latex_textbox():
                 output.innerHTML = "";
             } else {
                 placeholder.style.display = "none";
-                output.innerHTML = katex.renderToString(latex, { throwOnError: false });
+                try {
+                    output.innerHTML = katex.renderToString(latex, { throwOnError: false });
+                } catch (error) {
+                    output.innerHTML = `<span style="color: red;">Invalid LaTeX: ${error.message}</span>`;
+                }
             }
 
             // Update the input value with the transformed LaTeX
